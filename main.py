@@ -45,7 +45,6 @@ async def handle_message(message: types.Message):
         "title": user_message,
         "type": "action",
         "projectId": PROJECT_ID,
-        "priority": 0,
         "customFields": {}
     }
 
