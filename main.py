@@ -5,6 +5,8 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.utils import executor
 from environs import Env
 
+from source import check_priority
+
 # Инициализация окружения
 env = Env()
 env.read_env()
@@ -47,6 +49,11 @@ async def handle_message(message: types.Message):
         "projectId": PROJECT_ID,
         "customFields": {}
     }
+
+    priority = check_priority(user_message=user_message)
+
+    if priority != -1:
+        data.update(priority=priority)
 
     try:
         # Отправляем POST-запрос
