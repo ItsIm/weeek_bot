@@ -5,7 +5,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.utils import executor
 from environs import Env
 
-from source import check_priority
+from source import check_priority, check_date, check_time
 
 # Инициализация окружения
 env = Env()
@@ -41,6 +41,9 @@ async def restricted_access(message: types.Message):
 
 @dp.message_handler(lambda message: message.from_user.id == ALLOWED_USER_ID)
 async def handle_message(message: types.Message):
+    date_field = None
+    time_field = None
+
     user_message = message.text
 
     # Формируем данные для POST-запроса
@@ -53,9 +56,17 @@ async def handle_message(message: types.Message):
     }
 
     priority = check_priority(user_message=user_message)
+    date_field = check_date(user_message=user_message)
+    time_field = check_time(user_message=user_message)
 
     if priority != -1:
         data.update(priority=priority)
+
+    if date_field:
+        data.update(date=date_field)
+
+    if time_field:
+        data.update(time=time_field)
 
     try:
         # Отправляем POST-запрос
