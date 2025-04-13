@@ -21,6 +21,7 @@ ALLOWED_USER_ID = env.int("ALLOWED_USER_ID")  # Преобразуем в int
 WEEK_USER_ID = env.str("ALLOWED_USER_ID")
 API_URl = env.str("API_URl")
 PROJECT_ID = env.int("PROJECT_ID")
+BOARD_ID = env.int("BOARD_ID")
 
 # Инициализация бота и диспетчера
 bot = Bot(token=TELEGRAM_BOT_TOKEN)
@@ -47,6 +48,7 @@ async def handle_message(message: types.Message):
         "title": user_message,
         "type": "action",
         "projectId": PROJECT_ID,
+        "boardId": BOARD_ID,
         "customFields": {}
     }
 
